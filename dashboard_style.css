@@ -1,0 +1,161 @@
+:root {
+    --body-bg: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-dark: #1d2129;
+    --text-muted: #606770;
+    --border-color: #e9ebee;
+    --primary-color: #0068ff;
+    --success-color: #28a745;
+}
+
+body {
+    background-color: var(--body-bg);
+    color: var(--text-dark);
+}
+
+.main-content {
+    width: 100%;
+}
+
+.summary-card .summary-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.summary-card .card-title {
+    font-size: 1.75rem;
+}
+
+.card {
+    border-radius: 1rem; /* Increased border radius for a softer look */
+    border: none; /* Remove all borders from cards */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card-header {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+.table-responsive {
+    max-height: 600px; /* Adjust as needed */
+    overflow-y: auto;
+}
+
+.table-card {
+    overflow: hidden;
+}
+
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    background-color: #f7f7f7; /* Lighter header for contrast */
+    border-bottom: 2px solid var(--border-color);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.table td {
+    vertical-align: middle;
+    padding: 1.25rem 1rem;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table .btn-view-details {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px; /* Pill-shaped buttons */
+    transition: all 0.2s ease;
+}
+
+.table .btn-view-details:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#paid-bills-table-body .fw-bold {
+    color: var(--primary-color);
+}
+
+.table th:first-child, .table td:first-child {
+    padding-left: 1.5rem;
+}
+
+.table th:last-child, .table td:last-child {
+    padding-right: 1.5rem;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-content {
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    border: none;
+}
+
+#bill-details-modal .modal-dialog {
+    max-width: 800px; /* Adjust this value as needed */
+    width: 90%;
+}
+
+/* Bill Details in Modal */
+#bill-details-content h5 {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+#bill-details-content .receipt-details p {
+    margin-bottom: 0.5rem;
+}
+
+#bill-details-content .receipt-items {
+    margin-top: 1.5rem;
+}
+
+#bill-details-content .receipt-total {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px dashed var(--border-color);
+}
+
+#bill-details-content .receipt-total h4 {
+    font-weight: bold;
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shabu Buffet POS - Pro (Demo)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="main_style.css?v=1.1">
+</head>
+<body>
+    <nav class="main-nav navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container-fluid">
+            <div class="nav-left">
+                <a class="navbar-brand fw-bold" href="index.html">
+                    <i class="fas fa-utensils me-2"></i>Shabu POS (Demo)
+                </a>
+            </div>
+            <div class="nav-center"></div>
+            <div class="nav-right">
+                <div class="d-flex align-items-center" id="navbar-user-menu">
+                    <span class="navbar-text me-3">
+                        <i class="fas fa-user-circle me-1"></i>
+                        <strong>Demo User</strong> (manager)
+                    </span>
+                    <a class="nav-link d-flex align-items-center" href="index.html" title="หน้าแรก"><i class="fas fa-home fa-lg me-2"></i>หน้าแรก</a>
+                    <a class="nav-link d-flex align-items-center" href="dashboard.html" title="แดชบอร์ด"><i class="fas fa-chart-line fa-lg me-2"></i>แดชบอร์ด</a>
+                    <a class="nav-link d-flex align-items-center" href="login.html" title="ออกจากระบบ"><i class="fas fa-sign-out-alt fa-lg me-2"></i>ออกจากระบบ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="d-flex vh-100-nav">
+        <!-- Left Panel: Table Zone -->
+        <div class="left-panel bg-light border-end">
+            <div class="p-3 border-bottom bg-white">
+                <h4 class="mb-0"><i class="fas fa-border-all me-2"></i>โซนโต๊ะ</h4>
+            </div>
+            <div id="tables-grid-container" class="p-3 flex-grow-1 overflow-auto">
+                <!-- Visual zones and tables will be loaded here by script.js -->
+            </div>
+            <div class="table-status-legend p-3 mt-3 bg-light border-top rounded">
+                <h5 class="mb-2">สถานะโต๊ะ:</h5>
+                <div class="d-flex flex-wrap gap-3">
+                    <div class="legend-item d-flex align-items-center">
+                        <span class="legend-color-box bg-primary"></span>
+                        <span>ว่าง (Available)</span>
+                    </div>
+                    <div class="legend-item d-flex align-items-center">
+                        <span class="legend-color-box bg-success-occupied"></span>
+                        <span>ไม่ว่าง (Occupied)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Control & Billing -->
+        <div class="right-panel bg-white border-start d-flex flex-column">
+            <div class="p-3 border-bottom text-center">
+                <h2 id="control-table-name" class="mb-1">กรุณาเลือกโต๊ะ</h2>
+                <div id="control-table-info" class="text-muted small">
+                    <span><i class="far fa-clock me-1"></i><span id="control-start-time">--:--</span></span>
+                </div>
+                <div id="customer-controls" class="mt-2">
+                    <span class="fs-5"><i class="fas fa-users me-2"></i><strong id="control-customer-count" class="me-1">-</strong>คน</span>
+                    <button id="btn-edit-customers" class="btn btn-primary btn-sm py-1 px-2" disabled><i class="fas fa-edit"></i> แก้ไข</button>
+                </div>
+            </div>
+
+            <div id="bill-summary-panel" class="flex-grow-1 p-4 d-flex flex-column justify-content-center">
+                 <div class="text-center p-5 text-muted">กรุณาเลือกโต๊ะ</div>
+            </div>
+
+            <div class="notes-section p-3 border-top">
+                <h6><i class="fas fa-sticky-note me-1"></i> หมายเหตุ</h6>
+                <div id="notes-display" class="text-muted small p-2 bg-light rounded" style="min-height: 60px;">-</div>
+                <button id="btn-edit-notes" class="btn btn-info text-white w-100 mt-2" disabled><i class="fas fa-pencil-alt me-2"></i>เพิ่ม/แก้ไขหมายเหตุ</button>
+            </div>
+
+            <div class="control-buttons p-3 border-top">
+                <div class="d-grid gap-2 mb-3">
+                    <button id="btn-payment" class="btn btn-success btn-lg" disabled><i class="fas fa-cash-register me-2"></i>ชำระเงิน</button>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6"><button id="btn-check-bill" class="btn btn-outline-primary w-100" disabled><i class="fas fa-receipt me-1"></i> ดูใบแจ้งหนี้</button></div>
+                    <div class="col-6"><button id="btn-split-bill" class="btn btn-outline-secondary w-100" disabled><i class="fas fa-columns me-1"></i> แยกบิล</button></div>
+                </div>
+                 <div class="d-grid gap-2 mt-2">
+                    <button id="btn-cancel-bill" class="btn btn-danger w-100" disabled data-role-required="manager"><i class="fas fa-times-circle me-2"></i>ยกเลิกโต๊ะ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="customer-count-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">เปิดโต๊ะ <span id="modal-table-name"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="modal-adult-input" class="form-label"><i class="fas fa-user me-2"></i>ผู้ใหญ่ (300)</label>
+                                <input type="number" id="modal-adult-input" class="form-control form-control-lg text-center customer-input" min="0" value="1">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="modal-child-input" class="form-label"><i class="fas fa-child me-2"></i>เด็ก (150)</label>
+                                <input type="number" id="modal-child-input" class="form-control form-control-lg text-center customer-input" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modal-promo-input" class="form-label"><i class="fas fa-gift me-2"></i>โปรโมชั่น (ทานฟรี)</label>
+                        <input type="number" id="modal-promo-input" class="form-control form-control-lg text-center customer-input" min="0" value="0">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modal-start-time" class="form-label"><i class="far fa-clock me-2"></i>เวลาเปิดโต๊ะ</label>
+                        <input type="datetime-local" id="modal-start-time" class="form-control">
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="discount-percentage" class="form-label">ส่วนลด (%)</label>
+                        <input type="number" id="discount-percentage" class="form-control customer-input" min="0" max="100">
+                    </div>
+                    <div id="modal-summary" class="text-center">
+                        <h5 class="fw-bold">สรุปยอด</h5>
+                        <p class="fs-5 mb-0">ยอดรวม: <span id="modal-subtotal-amount" class="fw-bold">0.00</span> บาท</p>
+                        <p class="fs-5 mb-0">ส่วนลด: <span id="modal-discount-amount" class="fw-bold text-success">0.00</span> บาท</p>
+                        <p class="fs-4 mb-0">ยอดสุทธิ: <span id="modal-total-amount" class="fw-bold text-danger">0.00</span> บาท</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" id="confirm-open-table" class="btn btn-primary">ยืนยันเปิดโต๊ะ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="payment-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ชำระเงิน โต๊ะ <span id="payment-modal-table-name"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <span class="fs-5">ยอดที่ต้องชำระ</span>
+                        <h2 class="display-4 fw-bold text-danger" id="payment-total-amount">0.00</h2>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success btn-lg payment-method-btn" data-method="cash"><i class="fas fa-money-bill-wave me-2"></i>เงินสด</button>
+                        <button class="btn btn-info btn-lg payment-method-btn" data-method="qr_code"><i class="fas fa-qrcode me-2"></i>QR Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="qr-code-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">สแกนเพื่อชำระเงิน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>โต๊ะ: <strong id="qr-modal-table-name"></strong></p>
+                    <img id="qr-code-image" src="manu.png" alt="QR Code Placeholder" class="img-fluid mb-3" style="width: 200px;">
+                    <p class="fs-4">ยอดชำระ: <strong id="qr-modal-amount" class="text-danger">0.00</strong> บาท</p>
+                    <hr>
+                    <p class="text-muted">พนักงานกรุณากดยืนยันหลังตรวจสอบยอดเงินเรียบร้อยแล้ว</p>
+                    <div class="d-grid">
+                        <button id="btn-confirm-qr-payment" class="btn btn-primary btn-lg">ยืนยันการชำระเงิน</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="print-receipt-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                 <div class="modal-header d-print-none">
+                    <h5 class="modal-title">ใบแจ้งหนี้</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div id="receipt-content" class="p-3">
+                    <h5 class="text-center mb-3">ใบแจ้งหนี้ / ตรวจสอบรายการ</h5>
+                    <p>โต๊ะ: <span id="receipt-table-name"></span></p>
+                    <p>เวลา: <span id="receipt-time"></span></p>
+                    <p>จำนวนลูกค้า: <span id="receipt-customer-count"></span> คน</p>
+                    <hr>
+                    <div id="receipt-items"></div>
+                    <hr>
+                    <div id="receipt-summary">
+                        <!-- Summary will be injected by script.js -->
+                    </div>
+                    <p class="text-center small mt-3">กรุณาชำระเงินที่เคาน์เตอร์</p>
+                </div>
+                <div class="modal-footer d-print-none">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                     <button type="button" id="btn-do-print" class="btn btn-primary"><i class="fas fa-print"></i> พิมพ์</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="split-bill-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">แยกบิล โต๊ะ <span id="split-bill-table-name"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>ยอดรวมทั้งหมด: <strong id="split-bill-total" class="fs-5">0.00</strong> บาท</p>
+                    <div class="mb-3">
+                        <label for="split-count" class="form-label">หารจำนวน:</label>
+                        <input type="number" id="split-count" class="form-control" min="2" value="2">
+                    </div>
+                    <p class="text-center fs-4">ยอดชำระต่อคน: <strong id="split-result" class="text-danger">0.00</strong> บาท</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script> const userRole = 'manager'; </script>
+    <script src="script_demo.js"></script>
+</body>
+</html>

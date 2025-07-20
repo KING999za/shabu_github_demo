@@ -1,0 +1,368 @@
+/* Google Font: Kanit */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --font-family-sans-serif: 'Kanit', sans-serif;
+    --bs-body-font-family: var(--font-family-sans-serif);
+
+    /* Modern Color Palette */
+    --primary-color: #0068ff; /* Deep Purple (for general accents) */
+    --secondary-color: #6c757d; /* Muted Gray */
+    --danger-color: #dc3545; /* Red for alerts/cancel */
+    --info-color: #17a2b8; /* Teal for notes/info */
+
+    --background-light: #f8f9fa; /* Very light gray background */
+    --card-background: #ffffff; /* White for cards/panels */
+    --text-dark: #212529; /* Dark text for readability */
+    --text-light: #e9ecef; /* Light text for dark backgrounds */
+    --border-light: #dee2e6; /* Light border color */
+
+    /* New Table Status Colors */
+    --table-available-bg: #2baf2b;
+    --table-available-text: #ffffff;
+    --table-available-border: #2baf2b;
+
+    --table-occupied-bg: #90ee90; /* Light Green */
+    --table-occupied-text: #006400; /* Dark Green */
+    --table-occupied-border: #90ee90; /* Light Green */
+
+    --table-selected-bg: #FF0000; /* Red */
+    --table-selected-text: #ffffff; /* White */
+    --table-selected-border: #FF0000; /* Red */
+}
+
+body {
+    font-size: 1rem;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+}
+
+/* Navigation Bar */
+.main-nav {
+    background-color: #0068ff !important;
+    border-bottom: 4px solid var(--primary-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-light) !important;
+}
+
+.dropdown-menu {
+    background-color: #495057; /* Slightly lighter dark for dropdown */
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item {
+    color: var(--text-light);
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
+}
+
+.dropdown-item:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.vh-100-nav {
+    height: calc(100vh - 56px); /* Standard Bootstrap navbar height */
+}
+
+/* Panels */
+.left-panel, .right-panel {
+    background-color: var(--card-background);
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+}
+
+.left-panel {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-light);
+}
+
+.right-panel {
+    width: 35%;
+    min-width: 420px;
+}
+
+/* Table Zones */
+.zone-container {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background-color: var(--background-light);
+    border-radius: 0.75rem;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.zone-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border-light);
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.tables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+
+.table-box {
+    border-radius: 0.75rem;
+    border: 2px solid var(--border-light);
+    aspect-ratio: 1 / 0.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* transition: all 0.2s ease-in-out, box-shadow 0.2s ease-in-out; */
+    font-weight: 600;
+    padding: 0.75rem;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.table-box:hover {
+    transform: translateY(-7px) scale(1.02); /* Lift and slightly enlarge */
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25); /* Stronger, more diffused shadow */
+}
+
+.table-box.status-available {
+    background-color: var(--table-available-bg);
+    color: var(--table-available-text);
+    border-color: var(--table-available-border);
+}
+
+.table-box.status-occupied {
+    background-color: #dc3545; /* Red */
+    color: #ffffff; /* White text */
+    border-color: #dc3545; /* Red border (same as background) */
+}
+
+
+
+.table-name {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.table-time, .table-customer-count {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: inherit; /* Inherit color from parent .table-box */
+}
+
+/* Right Panel Enhancements */
+#control-table-name {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+#control-start-time, #control-customer-count {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+#customer-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#bill-summary-panel .summary-item {
+    font-size: 2rem;
+}
+
+#bill-summary-panel .summary-item .value {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--danger-color);
+}
+
+.notes-section h6 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.notes-section #notes-display {
+    white-space: pre-wrap;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    background-color: var(--background-light);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: 1px solid var(--border-light);
+}
+
+#btn-edit-notes {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+}
+
+#btn-edit-notes:hover {
+    opacity: 0.9;
+}
+
+.control-buttons .btn {
+    font-size: 1.3rem;
+    padding: 1.2rem 1.8rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: none;
+    padding: 1.5rem;
+}
+
+/* Print receipt */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #receipt-content, #receipt-content * {
+        visibility: visible;
+    }
+    #print-receipt-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        max-width: 100%;
+    }
+    .modal-dialog {
+        max-width: 100%;
+        margin: 0;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .left-panel, .right-panel {
+        width: 100%;
+        min-width: unset;
+    }
+    .d-flex.vh-100-nav {
+        flex-direction: column;
+        height: auto;
+    }
+    .tables-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1rem;
+    }
+    .table-box {
+        padding: 0.6rem;
+    }
+    .table-name {
+        font-size: 1.8rem;
+    }
+    #control-table-name {
+        font-size: 2rem;
+    }
+    .summary-item .value {
+        font-size: 3rem;
+    }
+    .control-buttons .btn {
+        font-size: 1.1rem;
+        padding: 1rem 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .tables-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    .table-name {
+        font-size: 1.5rem;
+    }
+    .table-time, .table-customer-count {
+        font-size: 0.9rem;
+    }
+    #control-table-name {
+        font-size: 1.8rem;
+    }
+    .summary-item .value {
+        font-size: 2.5rem;
+    }
+    .control-buttons .btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.2rem;
+    }
+}
+
+/* Table Status Legend */
+.table-status-legend {
+    background-color: var(--card-background);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.table-status-legend h5 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.legend-item {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.legend-color-box {
+    width: 25px;
+    height: 25px;
+    border-radius: 0.3rem;
+    margin-right: 0.75rem;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.legend-color-box.bg-primary {
+    background-color: var(--table-available-bg) !important; /* Use new available color */
+}
+
+.legend-color-box.bg-success-occupied {
+    background-color: #0a7e07 !important; /* Use new occupied color */
+}
+
+.legend-color-box.bg-danger {
+    background-color: var(--table-selected-border) !important; /* Use new selected border color */
+}
