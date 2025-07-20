@@ -44,4 +44,4 @@
 
 ## ติดต่อ
 
-หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม สามารถติดต่อได้ที่ [your-email@example.com] หรือเยี่ยมชมโปรไฟล์ GitHub ของฉัน [your-github-profile-link].
+หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม สามารถติดต่อได้ที่ panitan05499@srru.ac.th หรือ Facebook: พี่.ต่อ สายบรรเทิง (https://www.facebook.com/phi.tx.say.br.r.theing.2025).
